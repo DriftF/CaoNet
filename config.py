@@ -6,7 +6,7 @@ import tensorflow as tf
 slim = tf.contrib.slim
 import util
 
-
+#　全局变量
 global feat_shapes
 global image_shape
 
@@ -135,7 +135,7 @@ def init_config(image_shape, batch_size = 1,
     if batch_size_per_gpu < 1:
         raise ValueError('Invalid batch_size [=%d], resulting in 0 images per gpu.'%(batch_size))
     
-    
+#　打印配置
 def print_config(flags, dataset, save_dir = None, print_to_file = True):
     def do_print(stream=None):
         print('\n# =========================================================================== #', file=stream)

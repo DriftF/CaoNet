@@ -73,7 +73,7 @@ tf.app.flags.DEFINE_integer('train_image_height', 512, 'Train image size')
 
 
 FLAGS = tf.app.flags.FLAGS
-
+#配置初始化
 def config_initialization():
     # image shape and feature layers shape inference
     image_shape = (FLAGS.train_image_height, FLAGS.train_image_width)
@@ -105,9 +105,13 @@ def config_initialization():
     config.print_config(FLAGS, dataset)
     return dataset
 
+#建立数据队列
 def create_dataset_batch_queue(dataset):
+    #　设置GPU
     with tf.device('/cpu:0'):
+        # tf.name_scope可以让变量有相同的命名，只是限于tf.Variable的变量
         with tf.name_scope(FLAGS.dataset_name + '_data_provider'):
+            # 读取数据
             provider = slim.dataset_data_provider.DatasetDataProvider(
                 dataset,
                 num_readers=FLAGS.num_readers,
@@ -128,6 +132,8 @@ def create_dataset_batch_queue(dataset):
                                                          'object/oriented_bbox/y3',
                                                          'object/oriented_bbox/y4'
                                                          ])
+        # tf.stack()矩阵拼接
+        # tf.transpos()转置
         gxs = tf.transpose(tf.stack([x1, x2, x3, x4])) #shape = (N, 4)
         gys = tf.transpose(tf.stack([y1, y2, y3, y4]))
         image = tf.identity(image, 'input_image')
@@ -190,7 +196,8 @@ def create_clones(batch_queue):
                     b_image, b_seg_label, b_seg_loc, b_link_label = batch_queue.dequeue()
                     net = seglink_symbol.SegLinkNet(inputs = b_image, data_format = config.data_format)
                     
-                    # build seglink loss
+                    # build seglink loss 
+                    # 构建loss函数
                     net.build_loss(seg_labels = b_seg_label, 
                                    seg_offsets = b_seg_loc, 
                                    link_labels = b_link_label,
@@ -198,17 +205,20 @@ def create_clones(batch_queue):
                     
                     
                     # gather seglink losses
+                    # 收集seglink loss函数
                     losses = tf.get_collection(tf.GraphKeys.LOSSES, clone_scope)
                     assert len(losses) ==  3  # 3 is the number of seglink losses: seg_cls, seg_loc, link_cls
                     total_clone_loss = tf.add_n(losses) / config.num_clones
                     seglink_loss = seglink_loss + total_clone_loss
 
                     # gather regularization loss and add to clone_0 only
+                    # 收集正则化损失并仅添加到clone_0
                     if clone_idx == 0:
                         regularization_loss = tf.add_n(tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES))
                         total_clone_loss = total_clone_loss + regularization_loss
                     
                     # compute clone gradients
+                    #　计算梯度
                     clone_gradients = optimizer.compute_gradients(total_clone_loss)# all variables will be updated.
                     gradients.append(clone_gradients)
                     
@@ -236,9 +246,11 @@ def create_clones(batch_queue):
     return train_op
 
     
-    
+#　训练操作
 def train(train_op):
+    # td.summary.merge_all()显示训练时的各种信息
     summary_op = tf.summary.merge_all()
+    # tf.ConfigProto一般用在创建session的时候。用来对session进行参数配置
     sess_config = tf.ConfigProto(log_device_placement = False, allow_soft_placement = True)
     if FLAGS.gpu_memory_fraction < 0:
         sess_config.gpu_options.allow_growth = True
@@ -247,7 +259,10 @@ def train(train_op):
     
     init_fn = util.tf.get_init_fn(checkpoint_path = FLAGS.checkpoint_path, train_dir = FLAGS.train_dir, 
                           ignore_missing_vars = FLAGS.ignore_missing_vars, checkpoint_exclude_scopes = FLAGS.checkpoint_exclude_scopes)
+    
+    #保存模型
     saver = tf.train.Saver(max_to_keep = 500, write_version = 2)
+    # 用于计算损失和操作梯度步骤
     slim.learning.train(
             train_op,
             logdir = FLAGS.train_dir,

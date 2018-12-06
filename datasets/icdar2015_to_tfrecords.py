@@ -4,7 +4,7 @@ import tensorflow as tf
 import util
 from dataset_utils import int64_feature, float_feature, bytes_feature, convert_to_example
         
-
+#输出目录，数据目录，真实图片目录
 def cvt_to_tfrecords(output_path , data_path, gt_path):
     image_names = util.io.ls(data_path, '.jpg')#[0:10];
     print "%d images found in %s"%(len(image_names), data_path);
