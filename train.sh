@@ -5,8 +5,8 @@ export CUDA_VISIBLE_DEVICES=$1
 IMG_PER_GPU=$2
 DATASET=$3
 
-CHKPT_PATH=${HOME}/project/SegLink/chkpt_path
-TRAIN_DIR=${HOME}/models/seglink/seglink_icdar2015_384
+CHKPT_PATH=/root/dockerShare/www/CaoNet/chkpt_path
+TRAIN_DIR=/root/dockerShare/www/CaoNet/train_dir
 
 # get the number of gpus
 OLD_IFS="$IFS" 
@@ -21,7 +21,7 @@ BATCH_SIZE=`expr $NUM_GPUS \* $IMG_PER_GPU`
 #dataset
 $DATASET='cursive'
 
-DATASET_DIR=$HOME/datasets/SSD-tf/${DATA_PATH}
+DATASET_DIR=/root/dockerShare/www/CaoNet/datasets/SSD-tf/${DATA_PATH}
 
 python train_seglink.py \
 			--train_dir=${TRAIN_DIR} \
