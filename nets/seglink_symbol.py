@@ -1,7 +1,7 @@
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
-import net_factory
 import config
+import net_factory
 
 
 class SegLinkNet(object):
@@ -21,12 +21,13 @@ class SegLinkNet(object):
         
         self._build_network();
         self.shapes = self.get_shapes();
+
     def get_shapes(self):
         shapes = {}
-            
         for layer in self.end_points:
             shapes[layer] = tensor_shape(self.end_points[layer])[1:-1]
         return shapes
+
     def get_shape(self, name):
         return self.shapes[name] 
     
@@ -37,6 +38,7 @@ class SegLinkNet(object):
                         weights_regularizer=slim.l2_regularizer(self.weight_decay),
                         weights_initializer= self.weights_initializer,
                         biases_initializer = self.biases_initializer):
+            # 允许用户在arg_scope中指定若干操作符以及一批参数
             with slim.arg_scope([slim.conv2d, slim.max_pool2d],
                                 padding='SAME',
                                 data_format = self.data_format):
@@ -48,7 +50,10 @@ class SegLinkNet(object):
                 
                 with tf.variable_scope('seglink_layers'):
                     self._add_seglink_layers();
-        
+
+    # 在VGG的基础上再度添加层数
+    # input:不断深入的网络
+    # end_points:记录每一层的特征
     def _add_extra_layers(self, inputs, end_points):
         # Additional SSD blocks.
         # conv6/7/8/9/10: 1x1 and 3x3 convolutions stride 2 (except lasts).
@@ -67,18 +72,10 @@ class SegLinkNet(object):
         net = slim.conv2d(net, 128, [1, 1], scope='conv9_1')
         net = slim.conv2d(net, 256, [3, 3], stride=2, scope='conv9_2', padding='SAME')
         end_points['conv9_2'] = net
-        
-        
-#         net = slim.conv2d(net, 128, [1, 1], scope='conv10_1')
-        
-        # Padding to use kernel of size 4, to be compatible with caffe ssd model
-        # The minimal input dimension should be 512, resulting in 2x2. After padding, it becomes 4x4
-#         paddings = [[0, 0], [1, 1], [1, 1], [0, 0]]
-#         net = tf.pad(net, paddings)
-#         net = slim.conv2d(net, 256, [4, 4], scope='conv10_2', padding='VALID')
-#         end_points['conv10_2'] = net
+
         return net, end_points;    
-    
+
+    # 对每一层features进行操作
     def _build_seg_link_layer(self, layer_name):
         net = self.end_points[layer_name]
         batch_size, h, w = tensor_shape(net)[:-1]
@@ -100,12 +97,13 @@ class SegLinkNet(object):
             num_offset_pred = 5
             seg_offsets = slim.conv2d(net, num_offset_pred, [3, 3], scope = 'seg_offsets')
             
-            # within-layer link scores
+            # within-layer link scores　层内连接
             num_within_layer_link_scores_pred = 16
             within_layer_link_scores = slim.conv2d(net, num_within_layer_link_scores_pred, [3, 3], scope = 'within_layer_link_scores')
             within_layer_link_scores = tf.reshape(within_layer_link_scores, tensor_shape(within_layer_link_scores)[:-1] + [8, 2])
+            # print()
     
-            # cross-layer link scores
+            # cross-layer link scores　跨层连接
             num_cross_layer_link_scores_pred = 8
             cross_layer_link_scores = None;
             if layer_name != 'conv4_3':
@@ -129,7 +127,7 @@ class SegLinkNet(object):
             all_cross_layer_link_scores.append(cross_layer_link_scores)
             
         self.seg_score_logits = reshape_and_concat(all_seg_scores) # (batch_size, N, 2)
-        self.seg_scores = slim.softmax(self.seg_score_logits) # (batch_size, N, 2)
+        self.seg_scores = slim.softmax(self.seg_score_logits) # (batch_size, N, 2)  Softmax简单的说就是把一个N*1的向量归一化为（0，1）之间的值
         self.seg_offsets = reshape_and_concat(all_seg_offsets) # (batch_size, N, 5)
         self.cross_layer_link_scores = reshape_and_concat(all_cross_layer_link_scores)  # (batch_size, 8N, 2)
         self.within_layer_link_scores = reshape_and_concat(all_within_layer_link_scores)  # (batch_size, 4(N - N_conv4_3), 2)
@@ -138,7 +136,8 @@ class SegLinkNet(object):
         
         tf.summary.histogram('link_scores', self.link_scores)
         tf.summary.histogram('seg_scores', self.seg_scores)
-        
+
+    #　构建loss函数
     def build_loss(self, seg_labels, seg_offsets, link_labels, do_summary = True):
         batch_size = config.batch_size_per_gpu
         
@@ -157,13 +156,14 @@ class SegLinkNet(object):
             return pos_mask, neg_mask
         
         def OHNM_single_image(scores, n_pos, neg_mask):
-            """Online Hard Negative Mining.
-                scores: the scores of being predicted as negative cls
-                n_pos: the number of positive samples 
-                neg_mask: mask of negative samples
+            """Online Hard Negative Mining.　负面挖掘
+                scores: the scores of being predicted as negative cls　　得分预测
+                n_pos: the number of positive samples 　正例样本的数量　
+                neg_mask: mask of negative samples　 　　负样本的掩盖
                 Return:
-                    the mask of selected negative samples.
-                    if n_pos == 0, no negative samples will be selected.
+                    the mask of selected negative samples.　选定的负样本的mask
+                    if n_pos == 0, no negative samples will be selected. 如果n_pos == 0，则没有负样本北选择。
+
             """
             def has_pos():
                 n_neg = n_pos * config.max_neg_pos_ratio

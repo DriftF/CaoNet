@@ -34,7 +34,7 @@ global link_conf_threshold
 
 anchor_offset = 0.5    
 anchor_scale_gamma = 1.5
-feat_layers = ['conv4_3','fc7', 'conv6_2', 'conv7_2', 'conv8_2', 'conv9_2']
+feat_layers = ['conv4_3','fc7', 'conv6_2', 'conv7_2', 'conv8_2', 'conv9_2']#提取出来的features层
 # feat_norms = [20] + [-1] * len(feat_layers)
 max_height_ratio = 1.5
 # prior_scaling = [0.1, 0.2, 0.1, 0.2, 20.0]
@@ -98,18 +98,21 @@ def init_config(image_shape, batch_size = 1,
     h, w = image_shape
     from nets import anchor_layer
     from nets import seglink_symbol
-    fake_image = tf.ones((1, h, w, 3))
-    fake_net = seglink_symbol.SegLinkNet(inputs = fake_image, weight_decay = weight_decay)
-    feat_shapes = fake_net.get_shapes();
+
+    fake_image = tf.ones((1, h, w, 3))  #占位符号
+
+    fake_net = seglink_symbol.SegLinkNet(inputs = fake_image, weight_decay = weight_decay)  #得到对象
+    feat_shapes = fake_net.get_shapes();    #得到每个特征图的信息
     
     # the placement of the following lines are extremely important
     _set_image_shape(image_shape)
     _set_feat_shapes(feat_shapes)
-
+    # 生成anchors
     anchors, _ = anchor_layer.generate_anchors()
+
     global default_anchors
     default_anchors = anchors
-    
+    # anchors数量
     global num_anchors
     num_anchors = len(anchors)
     

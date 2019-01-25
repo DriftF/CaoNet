@@ -23,7 +23,7 @@ def _reshape_and_concat(tensors):
         
 def _generate_anchors_one_layer(h_I, w_I, h_l, w_l):
     """
-    generate anchors on on layer
+    generate anchors on on layer　在图像上生成anchor
     return a ndarray with shape (h_l, w_l, 4), and the last dimmension in the order:[cx, cy, w, h]
     """
     y, x = np.mgrid[0: h_l, 0:w_l]

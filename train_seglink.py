@@ -8,7 +8,6 @@ from datasets import dataset_factory
 from preprocessing import ssd_vgg_preprocessing
 from tf_extended import seglink
 import util
-import cv2
 from nets import seglink_symbol, anchor_layer
 
 
@@ -73,7 +72,7 @@ tf.app.flags.DEFINE_integer('train_image_height', 512, 'Train image size')
 
 
 FLAGS = tf.app.flags.FLAGS
-#配置初始化
+#　数据配置
 def config_initialization():
     # image shape and feature layers shape inference
     image_shape = (FLAGS.train_image_height, FLAGS.train_image_width)
@@ -105,7 +104,7 @@ def config_initialization():
     config.print_config(FLAGS, dataset)
     return dataset
 
-#建立数据队列
+#　建立数据队列
 def create_dataset_batch_queue(dataset):
     #　设置GPU
     with tf.device('/cpu:0'):
@@ -146,15 +145,17 @@ def create_dataset_batch_queue(dataset):
         image = tf.identity(image, 'processed_image')
         
         # calculate ground truth
+        # 计算真实标签
         seg_label, seg_loc, link_label = seglink.tf_get_all_seglink_gt(gxs, gys, gignored)
         
         # batch them
+        # tf.train.batch():利用一个tensor的列表或字典来获取一个batch数据
         b_image, b_seg_label, b_seg_loc, b_link_label = tf.train.batch(
             [image, seg_label, seg_loc, link_label],
             batch_size = config.batch_size_per_gpu,
             num_threads= FLAGS.num_preprocessing_threads,
             capacity = 50)
-            
+        # prefetch_queue():从数据’Tensor‘ 中预取张量进入队列
         batch_queue = slim.prefetch_queue.prefetch_queue(
             [b_image, b_seg_label, b_seg_loc, b_link_label],
             capacity = 50) 
@@ -190,10 +191,13 @@ def create_clones(batch_queue):
     gradients = []
     for clone_idx, gpu in enumerate(config.gpus):
         do_summary = clone_idx == 0 # only summary on the first clone
+
         with tf.variable_scope(tf.get_variable_scope(), reuse = True):# the variables has been created in config.init_config
             with tf.name_scope(config.clone_scopes[clone_idx]) as clone_scope:
                 with tf.device(gpu) as clone_device:
+                    # dequeue():使数据出列
                     b_image, b_seg_label, b_seg_loc, b_link_label = batch_queue.dequeue()
+
                     net = seglink_symbol.SegLinkNet(inputs = b_image, data_format = config.data_format)
                     
                     # build seglink loss 
@@ -235,8 +239,7 @@ def create_clones(batch_queue):
     
     # moving average
     if FLAGS.using_moving_average:
-        tf.logging.info('using moving average in training, \
-        with decay = %f'%(FLAGS.moving_average_decay))
+        tf.logging.info('using moving average in training,with decay = %f'%(FLAGS.moving_average_decay))
         ema = tf.train.ExponentialMovingAverage(FLAGS.moving_average_decay)
         ema_op = ema.apply(tf.trainable_variables())
         with tf.control_dependencies([update_op]):# ema after updating

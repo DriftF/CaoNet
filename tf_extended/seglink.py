@@ -549,12 +549,15 @@ def get_all_seglink_gt(xs, ys, ignored):
 def tf_get_all_seglink_gt(xs, ys, ignored):
     """
     xs, ys: tensors reprensenting ground truth bbox, both with shape=(N, 4), values in 0~1
+            表示真实性的bbox，其形状为=（N，4），值为0~1
     """
     h_I, w_I = config.image_shape
     
     xs = xs * w_I
-    ys = ys * h_I    
+    ys = ys * h_I
+    # tf.py_func():包装一个函数
     seg_labels, seg_offsets, link_labels = tf.py_func(get_all_seglink_gt, [xs, ys, ignored], [tf.int32, tf.float32, tf.int32]);
+
     seg_labels.set_shape([config.num_anchors])
     seg_offsets.set_shape([config.num_anchors, 5])
     link_labels.set_shape([config.num_links])
@@ -566,6 +569,7 @@ def tf_get_all_seglink_gt(xs, ys, ignored):
 def group_segs(seg_scores, link_scores, seg_conf_threshold, link_conf_threshold):
     """
     group segments based on their scores and links.
+    根据分数和链接分组
     Return: segment groups as a list, consisting of list of segment indexes, reprensting a group of segments belonging to a same bbox.
     """
     
@@ -658,7 +662,8 @@ def group_segs(seg_scores, link_scores, seg_conf_threshold, link_conf_threshold)
         
     
 ############################################################################################################
-#                       combining segments to bboxes                                                       #
+#                       combining segments to bboxes
+#                       将段组合到bbox中
 ############################################################################################################
 def tf_seglink_to_bbox(seg_cls_pred, link_cls_pred, seg_offsets_pred, image_shape, 
                        seg_conf_threshold = None, link_conf_threshold = None):

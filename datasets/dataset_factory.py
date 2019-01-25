@@ -35,11 +35,20 @@ synthtext = DatasetConfig(
     }
 )
 
+cursive=DatasetConfig(
+    file_pattern = 'cursive_*.tfrecord',
+    split_sizes = {
+        'train': 404,
+        'test':119
+    }
+)
+
 datasets_map = {
     'icdar2013':icdar2013,
     'icdar2015':icdar2015,
     'scut':scut,
-    'synthtext':synthtext
+    'synthtext':synthtext,
+    'cursive':cursive
 }
 
 
