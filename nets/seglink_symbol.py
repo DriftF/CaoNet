@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
 import config
@@ -30,7 +31,8 @@ class SegLinkNet(object):
 
     def get_shape(self, name):
         return self.shapes[name] 
-    
+
+    #构建网络
     def _build_network(self):
             
         with slim.arg_scope([slim.conv2d],
@@ -43,12 +45,15 @@ class SegLinkNet(object):
                                 padding='SAME',
                                 data_format = self.data_format):
                 with tf.variable_scope(self.basenet_type):
+                    #得到骨干网络提取的特征图
                     basenet, end_points = net_factory.get_basenet(self.basenet_type, self.inputs);
                     
                 with tf.variable_scope('extra_layers'):
+                    # 添加额外的层数
                     self.net, self.end_points = self._add_extra_layers(basenet, end_points);
                 
                 with tf.variable_scope('seglink_layers'):
+                    # 对提取的特征提进行处理的操作
                     self._add_seglink_layers();
 
     # 在VGG的基础上再度添加层数
@@ -118,6 +123,7 @@ class SegLinkNet(object):
         all_seg_offsets = []
         all_within_layer_link_scores = []
         all_cross_layer_link_scores  = []
+
         for layer_name in self.feat_layers:
             with tf.variable_scope(layer_name):
                 seg_scores, seg_offsets, within_layer_link_scores, cross_layer_link_scores = self._build_seg_link_layer(layer_name)
@@ -129,9 +135,12 @@ class SegLinkNet(object):
         self.seg_score_logits = reshape_and_concat(all_seg_scores) # (batch_size, N, 2)
         self.seg_scores = slim.softmax(self.seg_score_logits) # (batch_size, N, 2)  Softmax简单的说就是把一个N*1的向量归一化为（0，1）之间的值
         self.seg_offsets = reshape_and_concat(all_seg_offsets) # (batch_size, N, 5)
+
         self.cross_layer_link_scores = reshape_and_concat(all_cross_layer_link_scores)  # (batch_size, 8N, 2)
         self.within_layer_link_scores = reshape_and_concat(all_within_layer_link_scores)  # (batch_size, 4(N - N_conv4_3), 2)
+
         self.link_score_logits = tf.concat([self.within_layer_link_scores, self.cross_layer_link_scores], axis = 1)
+
         self.link_scores = slim.softmax(self.link_score_logits)
         
         tf.summary.histogram('link_scores', self.link_scores)
@@ -142,9 +151,9 @@ class SegLinkNet(object):
         batch_size = config.batch_size_per_gpu
         
         # note that for label values in both seg_labels and link_labels:
-        #    -1 stands for negative
-        #     1 stands for positive
-        #     0 stands for ignored
+        #    -1 stands for negative　负例子
+        #     1 stands for positive　正例子
+        #     0 stands for ignored  　放弃
         def get_pos_and_neg_masks(labels):
             if config.train_with_ignored:
                 pos_mask = labels >= 0

@@ -17,7 +17,7 @@ def cvt_to_tfrecords(output_path , data_path, gt_path):
             labels_text = [];
             ignored = []
             path = util.io.join_path(data_path, image_name);
-            print "\tconverting image: %d/%d %s"%(idx, len(image_names), image_name);
+            print "\tconverting image: %d/%d %s"%(idx, len(image_names), image_name);7
             image_data = tf.gfile.FastGFile(path, 'r').read()
             
             image = util.img.imread(path, rgb = True);
@@ -51,11 +51,12 @@ def cvt_to_tfrecords(output_path , data_path, gt_path):
                 labels_text.append(gt[-1]); 
                 labels.append(1);
             example = convert_to_example(image_data, image_name, labels, ignored, labels_text, bboxes, oriented_bboxes, shape)
+            # print example
             tfrecord_writer.write(example.SerializeToString())
         
 if __name__ == "__main__":
-    root_dir = util.io.get_absolute_path('/home/bojack/project/SegLink/datasets/cursive')
-    output_dir = util.io.get_absolute_path('/home/bojack/project/SegLink/datasets/SSD-tf/ICDAR/')
+    root_dir = util.io.get_absolute_path('/home/bojack/project/CaoNet/datasets/cursive')
+    output_dir = util.io.get_absolute_path('/home/bojack/project/CaoNet/datasets/SSD-tf/ICDAR/')
     util.io.mkdir(output_dir);
 
     training_data_dir = util.io.join_path(root_dir, 'images_train')

@@ -1,6 +1,4 @@
-#test code to make sure the ground truth calculation and data batch works well.
-
-import numpy as np
+# -*- coding: UTF-8 -*-
 import tensorflow as tf # test
 from tensorflow.python.ops import control_flow_ops
 
@@ -72,7 +70,7 @@ tf.app.flags.DEFINE_integer('train_image_height', 512, 'Train image size')
 
 
 FLAGS = tf.app.flags.FLAGS
-#　数据配置
+
 def config_initialization():
     # image shape and feature layers shape inference
     image_shape = (FLAGS.train_image_height, FLAGS.train_image_width)
@@ -99,7 +97,7 @@ def config_initialization():
     tf.summary.scalar('batch_size_per_gpu', batch_size_per_gpu)
 
     util.proc.set_proc_name(FLAGS.model_name + '_' + FLAGS.dataset_name)
-    
+    #　打印
     dataset = dataset_factory.get_dataset(FLAGS.dataset_name, FLAGS.dataset_split_name, FLAGS.dataset_dir)
     config.print_config(FLAGS, dataset)
     return dataset
@@ -138,7 +136,7 @@ def create_dataset_batch_queue(dataset):
         image = tf.identity(image, 'input_image')
         
         # Pre-processing image, labels and bboxes.
-        image, gignored, gbboxes, gxs, gys = ssd_vgg_preprocessing.preprocess_image(image, gignored, gbboxes, gxs, gys, 
+        image, gignored, gbboxes, gxs, gys = ssd_vgg_preprocessing.preprocess_image(image, gignored, gbboxes, gxs, gys,
                                                            out_shape = config.image_shape,
                                                            data_format = config.data_format, 
                                                            is_training = True)
@@ -155,6 +153,7 @@ def create_dataset_batch_queue(dataset):
             batch_size = config.batch_size_per_gpu,
             num_threads= FLAGS.num_preprocessing_threads,
             capacity = 50)
+
         # prefetch_queue():从数据’Tensor‘ 中预取张量进入队列
         batch_queue = slim.prefetch_queue.prefetch_queue(
             [b_image, b_seg_label, b_seg_loc, b_link_label],
@@ -182,13 +181,14 @@ def sum_gradients(clone_grads):
 def create_clones(batch_queue):        
     with tf.device('/cpu:0'):
         global_step = slim.create_global_step()
-        learning_rate = tf.constant(FLAGS.learning_rate, name='learning_rate')
+        learning_rate = tf.constant(FLAGS.learning_rate, name='learning_rate')  #学习率
         tf.summary.scalar('learning_rate', learning_rate)
+        #梯度下降优化
         optimizer = tf.train.MomentumOptimizer(learning_rate, momentum=FLAGS.momentum, name='Momentum')
         
     # place clones
     seglink_loss = 0; # for summary only
-    gradients = []
+    gradients = []  #梯度
     for clone_idx, gpu in enumerate(config.gpus):
         do_summary = clone_idx == 0 # only summary on the first clone
 
@@ -197,7 +197,7 @@ def create_clones(batch_queue):
                 with tf.device(gpu) as clone_device:
                     # dequeue():使数据出列
                     b_image, b_seg_label, b_seg_loc, b_link_label = batch_queue.dequeue()
-
+                    # 构建网络
                     net = seglink_symbol.SegLinkNet(inputs = b_image, data_format = config.data_format)
                     
                     # build seglink loss 
@@ -206,8 +206,7 @@ def create_clones(batch_queue):
                                    seg_offsets = b_seg_loc, 
                                    link_labels = b_link_label,
                                    do_summary = do_summary)
-                    
-                    
+
                     # gather seglink losses
                     # 收集seglink loss函数
                     losses = tf.get_collection(tf.GraphKeys.LOSSES, clone_scope)
@@ -225,12 +224,14 @@ def create_clones(batch_queue):
                     #　计算梯度
                     clone_gradients = optimizer.compute_gradients(total_clone_loss)# all variables will be updated.
                     gradients.append(clone_gradients)
-                    
+    # 用来显示标量信息
+    # 一般在画loss,accuary时会用到这个函数
     tf.summary.scalar('seglink_loss', seglink_loss)
     tf.summary.scalar('regularization_loss', regularization_loss)
     
     # add all gradients together
     # note that the gradients do not need to be averaged, because the average operation has been done on loss.
+    # 将所有渐变添加到一起
     averaged_gradients = sum_gradients(gradients)
     
     update_op = optimizer.apply_gradients(averaged_gradients, global_step=global_step)
@@ -238,6 +239,7 @@ def create_clones(batch_queue):
     train_ops = [update_op]
     
     # moving average
+    # 移动平均线
     if FLAGS.using_moving_average:
         tf.logging.info('using moving average in training,with decay = %f'%(FLAGS.moving_average_decay))
         ema = tf.train.ExponentialMovingAverage(FLAGS.moving_average_decay)
@@ -251,8 +253,9 @@ def create_clones(batch_queue):
     
 #　训练操作
 def train(train_op):
-    # td.summary.merge_all()显示训练时的各种信息
+    # 将所有summary全部保存到磁盘，以便tensorboard显示
     summary_op = tf.summary.merge_all()
+
     # tf.ConfigProto一般用在创建session的时候。用来对session进行参数配置
     sess_config = tf.ConfigProto(log_device_placement = False, allow_soft_placement = True)
     if FLAGS.gpu_memory_fraction < 0:
@@ -260,8 +263,7 @@ def train(train_op):
     elif FLAGS.gpu_memory_fraction > 0:
         sess_config.gpu_options.per_process_gpu_memory_fraction = FLAGS.gpu_memory_fraction;
     
-    init_fn = util.tf.get_init_fn(checkpoint_path = FLAGS.checkpoint_path, train_dir = FLAGS.train_dir, 
-                          ignore_missing_vars = FLAGS.ignore_missing_vars, checkpoint_exclude_scopes = FLAGS.checkpoint_exclude_scopes)
+    init_fn = util.tf.get_init_fn(checkpoint_path = FLAGS.checkpoint_path, train_dir = FLAGS.train_dir,ignore_missing_vars = FLAGS.ignore_missing_vars, checkpoint_exclude_scopes = FLAGS.checkpoint_exclude_scopes)
     
     #保存模型
     saver = tf.train.Saver(max_to_keep = 500, write_version = 2)

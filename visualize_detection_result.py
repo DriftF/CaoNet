@@ -27,10 +27,11 @@ def draw_bbox(image_data, line, color):
             scale = 1, 
             color = color)
     def draw_oriented_bbox():
-        points = [int(v) for v in data[0:8]]
-        points = np.reshape(points, (4, 2))
-        cnts = util.img.points_to_contours(points)
-        util.img.draw_contours(image_data, cnts, -1, color = color, border_width = 1)
+        points = [int(v.strip()) for v in data[0:8] if v !='\n']
+        if len(points) != 0:
+            points = np.reshape(points, (4, 2))
+            cnts = util.img.points_to_contours(points)
+            util.img.draw_contours(image_data, cnts, -1, color = color, border_width = 1)
     
     draw_oriented_bbox()
 #     if len(data) == 5: # ic13 gt
@@ -49,7 +50,7 @@ def draw_bbox(image_data, line, color):
        
 def visualize(image_root, det_root, output_root, gt_root = None):
     def read_gt_file(image_name):
-        gt_file = util.io.join_path(gt_root, 'gt_%s.txt'%(image_name))
+        gt_file = util.io.join_path(gt_root, '%s.txt'%(image_name))
         return util.io.read_lines(gt_file)
 
     def read_det_file(image_name):

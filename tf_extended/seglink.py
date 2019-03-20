@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 import cv2
 import numpy as np
 import tensorflow as tf
@@ -561,6 +562,7 @@ def tf_get_all_seglink_gt(xs, ys, ignored):
     seg_labels.set_shape([config.num_anchors])
     seg_offsets.set_shape([config.num_anchors, 5])
     link_labels.set_shape([config.num_links])
+
     return seg_labels, seg_offsets, link_labels;
 
 ############################################################################################################

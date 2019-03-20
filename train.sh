@@ -10,8 +10,8 @@ TRAIN_DIR=/root/dockerShare/www/CaoNet/train_dir
 
 # get the number of gpus
 OLD_IFS="$IFS" 
-IFS="," 
-gpus=($CUDA_VISIBLE_DEVICES) 
+IFS=","
+gpus=$CUDA_VISIBLE_DEVICES
 IFS="$OLD_IFS"
 NUM_GPUS=${#gpus[@]}
 
@@ -21,7 +21,7 @@ BATCH_SIZE=`expr $NUM_GPUS \* $IMG_PER_GPU`
 #dataset
 $DATASET='cursive'
 
-DATASET_DIR=/root/dockerShare/www/CaoNet/datasets/SSD-tf/${DATA_PATH}
+DATASET_DIR=/home/bojack/project/CaoNet/datasets/SSD-tf/${DATA_PATH}
 
 python train_seglink.py \
 			--train_dir=${TRAIN_DIR} \

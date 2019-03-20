@@ -3,18 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="f231d9dd-5a96-4bbe-a0fc-98a702552a51" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aa" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/dataset_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/dataset_factory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/SSD-tf/ICDAR/cursive_test.tfrecord" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/SSD-tf/ICDAR/cursive_test.tfrecord" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/SSD-tf/ICDAR/cursive_train.tfrecord" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/SSD-tf/ICDAR/cursive_train.tfrecord" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/datasets/icdar2015_to_tfrecords.py" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/icdar2015_to_tfrecords.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img_10_pred.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img_31_pred.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/nets/anchor_layer.py" beforeDir="false" afterPath="$PROJECT_DIR$/nets/anchor_layer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nets/seglink_symbol.py" beforeDir="false" afterPath="$PROJECT_DIR$/nets/seglink_symbol.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nets/vgg.py" beforeDir="false" afterPath="$PROJECT_DIR$/nets/vgg.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tf_extended/seglink.py" beforeDir="false" afterPath="$PROJECT_DIR$/tf_extended/seglink.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train.sh" beforeDir="false" afterPath="$PROJECT_DIR$/train.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train_seglink.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_seglink.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/visualize_detection_result.py" beforeDir="false" afterPath="$PROJECT_DIR$/visualize_detection_result.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,7 +22,50 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train_seglink.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1584">
+              <caret column="16" selection-end-line="1" />
+              <folding>
+                <element signature="e#24#54#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/nets/vgg.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="613">
+              <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/nets/seglink_symbol.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-529">
+              <caret line="78" column="35" selection-start-line="78" selection-start-column="32" selection-end-line="78" selection-end-column="35" />
+              <folding>
+                <element signature="e#24#47#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>ignore_missing_vars</find>
+      <find>dataset_dir</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -31,22 +73,25 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/train_seglink.py" />
+        <option value="$PROJECT_DIR$/datasets/dataset_factory.py" />
+        <option value="$PROJECT_DIR$/nets/anchor_layer.py" />
+        <option value="$PROJECT_DIR$/visualize_detection_result.py" />
+        <option value="$PROJECT_DIR$/datasets/dataset_utils.py" />
         <option value="$PROJECT_DIR$/tf_extended/seglink.py" />
+        <option value="$PROJECT_DIR$/train.sh" />
         <option value="$PROJECT_DIR$/nets/seglink_symbol.py" />
         <option value="$PROJECT_DIR$/config.py" />
-        <option value="$PROJECT_DIR$/nets/anchor_layer.py" />
+        <option value="$PROJECT_DIR$/train_seglink.py" />
         <option value="$PROJECT_DIR$/datasets/icdar2015_to_tfrecords.py" />
-        <option value="$PROJECT_DIR$/datasets/dataset_factory.py" />
-        <option value="$PROJECT_DIR$/train.sh" />
+        <option value="$PROJECT_DIR$/nets/vgg.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="199" />
-    <option name="y" value="70" />
-    <option name="width" value="1717" />
-    <option name="height" value="882" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="41" />
+    <option name="y" value="41" />
+    <option name="width" value="1376" />
+    <option name="height" value="894" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -58,8 +103,8 @@
         <subPane>
           <expand>
             <path>
-              <item name="SegLink" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SegLink" type="462c0819:PsiDirectoryNode" />
+              <item name="CaoNet" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CaoNet" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -104,16 +149,29 @@
       <workItem from="1548252118769" duration="3062000" />
       <workItem from="1548335267789" duration="20165000" />
       <workItem from="1548425990560" duration="2290000" />
+      <workItem from="1548444076519" duration="36633000" />
+      <workItem from="1548956268596" duration="10368000" />
+      <workItem from="1549984736652" duration="4274000" />
+      <workItem from="1551373386459" duration="2154000" />
+      <workItem from="1551614436116" duration="34138000" />
+      <workItem from="1551946104237" duration="17145000" />
+      <workItem from="1552377466409" duration="3000" />
+      <workItem from="1552398494903" duration="598000" />
+      <workItem from="1552462839674" duration="6225000" />
+      <workItem from="1552526819764" duration="5191000" />
+      <workItem from="1552796341348" duration="773000" />
+      <workItem from="1552813939484" duration="12793000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29810000" />
+    <option name="totallyTimeSpent" value="160105000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-1" width="1920" height="1053" extended-state="6" />
+    <frame x="0" y="-1" width="1920" height="1053" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16986156" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1341853" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -126,8 +184,8 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.3290461" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5017836" side_tool="true" weight="0.2934363" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49821642" visible="true" weight="0.244373" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -163,26 +221,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/datasets/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/util/io_.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2878">
-          <caret line="28" column="43" selection-start-line="28" selection-end-line="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/util/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1102">
-          <caret line="73" column="13" selection-start-line="73" selection-start-column="4" selection-end-line="73" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/anaconda3/lib/python3.5/site-packages/cv2/__init__.py" />
     <entry file="file://$PROJECT_DIR$/util/img.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -197,34 +235,9 @@
     <entry file="file://$PROJECT_DIR$/nets/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/train.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="34" column="19" selection-start-line="34" selection-start-column="14" selection-end-line="34" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pylib/tf_docker/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="13" column="28" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pylib/tf_docker/build.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="3" lean-forward="true" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pylib/tf_docker/setup_env.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" column="29" lean-forward="true" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/pylib/tf_docker/Dockerfile" />
+    <entry file="file://$PROJECT_DIR$/pylib/tf_docker/build.sh" />
+    <entry file="file://$PROJECT_DIR$/pylib/tf_docker/setup_env.sh" />
     <entry file="file://$PROJECT_DIR$/tf_extended/metrics.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -234,41 +247,180 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pylib/tf_docker/tf_gpu_into.sh">
+    <entry file="file://$PROJECT_DIR$/pylib/tf_docker/tf_gpu_into.sh" />
+    <entry file="file://$PROJECT_DIR$/pylib/tf_docker/tf_gpu_start.sh" />
+    <entry file="file://$PROJECT_DIR$/tf_extended/math.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/train.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" column="12" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="12" />
+        <state relative-caret-position="359">
+          <caret line="40" column="44" selection-start-line="40" selection-start-column="35" selection-end-line="40" selection-end-column="44" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pylib/tf_docker/tf_gpu_start.sh">
+    <entry file="file://$USER_HOME$/anaconda3/lib/python3.5/site-packages/notebook/services/contents/filecheckpoints.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" column="30" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="30" />
+        <state relative-caret-position="200">
+          <caret line="103" column="8" selection-start-line="103" selection-start-column="8" selection-end-line="103" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datasets/dataset_utils.py">
+    <entry file="file://$PROJECT_DIR$/preprocessing/preprocessing_factory.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="138" column="57" selection-start-line="138" selection-start-column="40" selection-end-line="138" selection-end-column="57" />
+        <state relative-caret-position="380">
+          <caret line="47" column="65" selection-start-line="47" selection-start-column="54" selection-end-line="47" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/桌面/visualize_detection_result.py" />
+    <entry file="file://$PROJECT_DIR$/util/io_.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="92" column="30" selection-start-line="93" selection-start-column="27" selection-end-line="93" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_seglink.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="980">
+          <caret line="82" column="11" selection-start-line="82" selection-start-column="11" selection-end-line="82" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_batch_and_gt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="160" column="29" selection-start-line="160" selection-start-column="29" selection-end-line="160" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datasets/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preprocessing/tf_image.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/lib/python3.5/site-packages/tensorflow/python/framework/ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="5901" column="4" selection-start-line="5901" selection-start-column="4" selection-end-line="5901" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nets/anchor_layer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="26" column="41" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
+          <folding>
+            <element signature="e#24#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tf_extended/bboxes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="684">
+          <caret line="200" selection-start-line="200" selection-end-line="200" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util/str_.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="68" column="22" selection-start-line="68" selection-start-column="16" selection-end-line="68" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" column="1" lean-forward="true" selection-start-line="12" selection-start-column="1" selection-end-line="17" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tf_extended/seglink.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="508" column="29" lean-forward="true" selection-start-line="508" selection-start-column="21" selection-end-line="508" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/preprocessing/ssd_vgg_preprocessing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="294" column="44" lean-forward="true" selection-start-line="294" selection-start-column="44" selection-end-line="294" selection-end-column="44" />
+        <state relative-caret-position="1627">
+          <caret line="273" column="40" selection-start-line="273" selection-start-column="40" selection-end-line="273" selection-end-column="40" />
+          <folding>
+            <element signature="e#731#761#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tf_extended/math.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nets/vgg.py">
+    <entry file="file://$PROJECT_DIR$/datasets/dataset_factory.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="687">
-          <caret line="41" column="14" selection-start-line="41" selection-start-column="11" selection-end-line="41" selection-end-column="14" />
+        <state relative-caret-position="437">
+          <caret line="69" column="33" selection-start-line="69" selection-start-column="33" selection-end-line="69" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="613">
+          <caret line="137" column="29" selection-start-line="137" selection-start-column="29" selection-end-line="137" selection-end-column="29" />
+          <folding>
+            <element signature="e#25#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datasets/dataset_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="613">
+          <caret line="151" column="1" selection-start-line="151" selection-start-column="1" selection-end-line="151" selection-end-column="1" />
+          <folding>
+            <element signature="e#756#779#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="73" column="13" selection-start-line="73" selection-start-column="4" selection-end-line="73" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datasets/icdar2015_to_tfrecords.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-17">
+          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
+          <folding>
+            <element signature="e#16#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="25" column="15" lean-forward="true" selection-start-line="25" selection-start-column="15" selection-end-line="25" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/visualize_detection_result.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="83" column="19" lean-forward="true" selection-start-line="83" selection-start-column="19" selection-end-line="83" selection-end-column="19" />
+          <folding>
+            <element signature="e#17#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -279,78 +431,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tf_extended/bboxes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="599">
-          <caret line="216" column="57" selection-start-line="216" selection-start-column="44" selection-end-line="216" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tf_extended/seglink.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1892">
-          <caret line="101" column="38" selection-start-line="101" selection-start-column="4" selection-end-line="101" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nets/seglink_symbol.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="27" column="40" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="40" />
+        <state relative-caret-position="-529">
+          <caret line="78" column="35" selection-start-line="78" selection-start-column="32" selection-end-line="78" selection-end-column="35" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2354">
-          <caret line="111" selection-start-line="111" selection-end-line="111" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nets/anchor_layer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="20" column="65" selection-start-line="20" selection-start-column="65" selection-end-line="20" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/datasets/icdar2015_to_tfrecords.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
-          <folding>
-            <element signature="e#16#35#0" expanded="true" />
+            <element signature="e#24#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train_seglink.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="202" column="27" selection-start-line="202" selection-start-column="27" selection-end-line="202" selection-end-column="27" />
+        <state relative-caret-position="-1584">
+          <caret column="16" selection-end-line="1" />
           <folding>
-            <element signature="e#81#99#0" expanded="true" />
+            <element signature="e#24#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datasets/dataset_factory.py">
+    <entry file="file://$PROJECT_DIR$/nets/vgg.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="70" column="46" lean-forward="true" selection-start-line="70" selection-start-column="46" selection-end-line="70" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="27" column="33" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="33" />
+        <state relative-caret-position="613">
+          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
